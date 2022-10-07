@@ -49,15 +49,16 @@
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
-
+void LLDD_Digital_Clock(void);
+void LLDD(int a, int b, int c,int i);
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
   /* Write your local variable definition here */
 	
-   int i,j,k,a,b,c;
-   char ca[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+   
+   
    //char ca[]={0xf9,0xa4,0xb0,0x99};
   /*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
   PE_low_level_init();
@@ -68,43 +69,7 @@ int main(void)
 
   while(1)
   {
-  for(a=0;a<6;a++)
-  {
-	  
-   for(b=0;b<=9;b++)
-   {
-	   
-    for(c=0;c<6;c++)
-    {
-      for(i=0;i<=9;i++)
-      {
-    	  for(k=0;k<50;k++)
-    	  {
-    		  	  Byte1_PutVal(ca[a]);
-    		  	  Bit1_ClrVal();
-    		  	  for(j=0;j<0xfff;j++);
-    		  	  Bit1_SetVal();
-	 
-    		  	  Byte1_PutVal(ca[b]);
-    		  	  Bit2_ClrVal();
-    		  	  for(j=0;j<0xfff;j++);
-    		  	  Bit2_SetVal();
-	
-    		  	  Byte1_PutVal(ca[c]);
-    		  	  Bit3_ClrVal();
-    		  	  for(j=0;j<0xfff;j++);
-    		  	  Bit3_SetVal();
-	 
-    		  	  Byte1_PutVal(ca[i]);
-    		  	  Bit4_ClrVal();
-    		  	  for(j=0;j<0xfff;j++);
-    		  	  Bit4_SetVal();
-	   
-    	  }
-      	 }
-    	}
-   	   }
-  	  }
+	  LLDD_Digital_Clock();
   }
  
  
@@ -119,9 +84,56 @@ int main(void)
   /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 } /*** End of main routine. DO NOT MODIFY THIS TEXT!!! ***/
 
-
-
+void LLDD_Digital_Clock()
+{
+	int i,a=0,b=0,c=0;
 	
+	for(a=0;a<6;a++)
+	  {
+		  
+	   for(b=0;b<=9;b++)
+	   {
+		   
+	    for(c=0;c<6;c++)
+	    {
+	      for(i=0;i<=9;i++)
+	      {
+	    	  LLDD(a,b,c,i);
+	      	 }
+	      
+	    	}
+	   	   }
+	  	  }
+}
+
+void LLDD(int a, int b, int c,int i)
+{
+	int j,k;
+	char ca[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0x88,0x83,0xc6,0xa1,0x86,0x8e};
+	for(k=0;k<50;k++)
+		{
+		   Byte1_PutVal(ca[a]);
+		   Bit1_ClrVal();
+		   for(j=0;j<0xfff;j++);
+		   Bit1_SetVal();
+			 
+		   Byte1_PutVal(ca[b]);
+		   Bit2_ClrVal();
+		   for(j=0;j<0xfff;j++);
+		   Bit2_SetVal();
+			
+		   Byte1_PutVal(ca[c]);
+		   Bit3_ClrVal();
+		   for(j=0;j<0xfff;j++);
+		   Bit3_SetVal();
+			 
+		   Byte1_PutVal(ca[i]);
+		   Bit4_ClrVal();
+		   for(j=0;j<0xfff;j++);
+		   Bit4_SetVal();
+			   
+		    	  }
+}
 
 
 /* END ProcessorExpert */
